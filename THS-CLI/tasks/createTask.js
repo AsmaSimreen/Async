@@ -24,13 +24,22 @@ function createTask() {
 }
 module.exports = createTask;
 
+const util = require('util');
+const readFile = util.promisify(fs.readFile);
 
+readFile(`data/todo.json`)
+    .then((data) => {
+        console.log(data.toString());
+    })
+    .catch((err) => {
+        console.error(err);
+    });
 
-fs.readFile('data/todo2.json', (err, data) => {
-    if (err) {
-        throw err;
-        // console.error(err);
-        // return;
-    }
-    console.log(data.toString());
-});
+// fs.readFile('data/todo2.json', (err, data) => {
+//     if (err) {
+//         throw err;
+//         // console.error(err);
+//         // return;
+//     }
+//     console.log(data.toString());
+// });

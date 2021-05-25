@@ -1,45 +1,27 @@
 const fs = require('fs');
+const util = require('util');
 const readline = require('readline-sync');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
+
+const readFile = util.promisify(fs.readFile);
+const writeFile = util.promisify(fs.writeFile);
+
 function createTask() {
     let task = readline.question(`Enter The Task:`);
-    fs.readFile(path.resolve('data', 'todo.json'), (err, fileData) => {
-        if (err) {
-            console.error(err);
-        } else {
+    readFile(path.resolve('data', 'todo.json'))
+        .then((fileData) => {
             let data = JSON.parse(fileData.toString());
             let newTask = { id: uuidv4(), task: task };
             data.push(newTask);
-            fs.writeFile(path.resolve('data', 'todo.json'), JSON.stringify(data), (err) => {
-                if (err) {
-                    console.error(err);
-                }
-                else {
-                    console.log("Task Is Added Successfully");
-                }
-            })
-        }
-    })
+            return writeFile(path.resolve('data', 'todo.json'), JSON.stringify(data));
+        })
+        .then(() => {
+            console.log("Task Is Added Successfully");
+        })
+        .catch((err) => {
+            console.error(err);
+        })
 }
 module.exports = createTask;
 
-const util = require('util');
-const readFile = util.promisify(fs.readFile);
-
-readFile(`data/todo.json`)
-    .then((data) => {
-        console.log(data.toString());
-    })
-    .catch((err) => {
-        console.error(err);
-    });
-
-// fs.readFile('data/todo2.json', (err, data) => {
-//     if (err) {
-//         throw err;
-//         // console.error(err);
-//         // return;
-//     }
-//     console.log(data.toString());
-// });

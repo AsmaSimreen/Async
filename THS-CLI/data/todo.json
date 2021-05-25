@@ -10,5 +10,9 @@
     {
         "id": "4ecca3bb-48d9-4dea-92f5-a71ba81a3b83",
         "task": "Refactoring Session"
+    },
+    {
+        "id": "29af9d87-1461-47aa-8c02-0db53a2e2683",
+        "task": "New Promise Session"
     }
 ]

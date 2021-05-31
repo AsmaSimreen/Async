@@ -7,7 +7,7 @@ function getUser() {
                 name: 'John Doe',
                 age: 25
             };
-            console.log("UserID:"+id+":Username:"+user.name+",UserAge:",user.age);
+            console.log("UserID:" + id + ":Username:" + user.name + ",UserAge:", user.age);
             setTimeout(function (age) {
                 console.log(user);
             }, 1000, user.age);
